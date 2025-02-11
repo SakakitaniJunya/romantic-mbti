@@ -169,24 +169,6 @@ const questions = [
   { id: 28, text: "友人・趣味なども含めて、自分の生活ペースを大事にしたい。（逆説的にT寄りを下げる）" }
 ];
 
-//
-// 【ラジオボタン共通スタイル】
-const radioLabelStyle: React.CSSProperties = {
-  cursor: 'pointer',
-  padding: '12px 20px',
-  borderRadius: '50%',
-  background: '#e0f7fa',
-  border: '2px solid var(--primary-color)',
-  color: 'var(--primary-color)',
-  fontWeight: 600,
-  transition: 'all 0.3s ease',
-  width: '20px',
-  height: '20px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-
 export default function TestPage() {
   const [result, setResult] = useState<{
     typeKey: string;
@@ -197,19 +179,30 @@ export default function TestPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let scoreIR = 0, scoreLH = 0, scoreEV = 0, scoreTD = 0;
+    let scoreIR = 0,
+      scoreLH = 0,
+      scoreEV = 0,
+      scoreTD = 0;
     const formData = new FormData(e.currentTarget);
 
-    questionSettings.forEach(qs => {
+    questionSettings.forEach((qs) => {
       const answerStr = formData.get("q" + qs.q);
       if (!answerStr) return;
       const selectedValue = parseInt(answerStr as string);
       const subScore = (selectedValue - 3) * qs.polarity;
       switch (qs.dimension) {
-        case "IR": scoreIR += subScore; break;
-        case "LH": scoreLH += subScore; break;
-        case "EV": scoreEV += subScore; break;
-        case "TD": scoreTD += subScore; break;
+        case "IR":
+          scoreIR += subScore;
+          break;
+        case "LH":
+          scoreLH += subScore;
+          break;
+        case "EV":
+          scoreEV += subScore;
+          break;
+        case "TD":
+          scoreTD += subScore;
+          break;
       }
     });
 
@@ -224,7 +217,7 @@ export default function TestPage() {
         typeKey: finalTypeKey,
         title: typeData[finalTypeKey].title,
         subtitle: typeData[finalTypeKey].subtitle,
-        description: typeData[finalTypeKey].description
+        description: typeData[finalTypeKey].description,
       });
     } else {
       setResult(null);
@@ -232,334 +225,563 @@ export default function TestPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ padding: "20px" }}>
       {/* ヒーローヘッダー */}
-      <header style={{
-        width: '100%',
-        padding: '60px 20px',
-        textAlign: 'center',
-        color: 'var(--accent-color)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '120%',
-          height: '120%',
-          background: 'radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          transform: 'translate(-10%, -10%)'
-        }}></div>
-        <h1 style={{ fontSize: '2.5rem', margin: 0, marginBottom: '10px', fontWeight: 700 }}>恋愛特化型MBTIライク診断</h1>
-        <p style={{ fontSize: '1.2rem', marginBottom: 0, lineHeight: 1.6 }}>
-          28問に答えて、あなたの恋愛時のタイプを診断しましょう。<br />
+      <header
+        style={{
+          width: "100%",
+          padding: "60px 20px",
+          textAlign: "center",
+          color: "var(--accent-color)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "120%",
+            height: "120%",
+            background:
+              "radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 70%)",
+            pointerEvents: "none",
+            transform: "translate(-10%, -10%)",
+          }}
+        ></div>
+        <h1
+          style={{
+            fontSize: "2.5rem",
+            margin: 0,
+            marginBottom: "10px",
+            fontWeight: 700,
+          }}
+        >
+          恋愛特化型MBTIライク診断
+        </h1>
+        <p style={{ fontSize: "1.2rem", marginBottom: 0, lineHeight: 1.6 }}>
+          28問に答えて、あなたの恋愛時のタイプを診断しましょう。
+          <br />
           I/R・L/H・E/V・T/D の4軸から導き出される全16タイプです。
         </p>
       </header>
 
       {/* グラスカード＋ナビゲーション */}
-      <div style={{
-        background: 'rgba(255,255,255, 0.6)',
-        boxShadow: '0 10px 25px var(--shadow-color)',
-        borderRadius: '16px',
-        padding: '30px',
-        textAlign: 'center',
-        marginBottom: '20px'
-      }}>
-        <p style={{ color: '#555', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          恋愛時のあなたの傾向をサクッとチェック！<br />
+      <div
+        style={{
+          background: "rgba(255,255,255, 0.6)",
+          boxShadow: "0 10px 25px var(--shadow-color)",
+          borderRadius: "16px",
+          padding: "30px",
+          textAlign: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <p style={{ color: "#555", fontSize: "1.1rem", lineHeight: 1.6 }}>
+          恋愛時のあなたの傾向をサクッとチェック！
+          <br />
           選択肢をクリックして回答するだけで診断できます。
         </p>
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <Link href="/types" target="_blank" style={{
-            display: 'inline-block',
-            margin: '5px 8px',
-            padding: '12px 20px',
-            background: 'var(--primary-color)',
-            color: '#fff',
-            textDecoration: 'none',
-            borderRadius: '6px',
-            fontWeight: 700,
-            transition: 'background 0.3s, transform 0.3s',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
-          }}>16タイプ一覧を見る</Link>
-          <Link href="/compatibility" target="_blank" style={{
-            display: 'inline-block',
-            margin: '5px 8px',
-            padding: '12px 20px',
-            background: 'var(--primary-color)',
-            color: '#fff',
-            textDecoration: 'none',
-            borderRadius: '6px',
-            fontWeight: 700,
-            transition: 'background 0.3s, transform 0.3s',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
-          }}>相性診断ページ</Link>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <Link
+            href="/types"
+            target="_blank"
+            style={{
+              display: "inline-block",
+              margin: "5px 8px",
+              padding: "12px 20px",
+              background: "var(--primary-color)",
+              color: "#fff",
+              textDecoration: "none",
+              borderRadius: "6px",
+              fontWeight: 700,
+              transition: "background 0.3s, transform 0.3s",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+            }}
+          >
+            16タイプ一覧を見る
+          </Link>
+          <Link
+            href="/compatibility"
+            target="_blank"
+            style={{
+              display: "inline-block",
+              margin: "5px 8px",
+              padding: "12px 20px",
+              background: "var(--primary-color)",
+              color: "#fff",
+              textDecoration: "none",
+              borderRadius: "6px",
+              fontWeight: 700,
+              transition: "background 0.3s, transform 0.3s",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+            }}
+          >
+            相性診断ページ
+          </Link>
         </div>
       </div>
 
       {/* 診断フォーム */}
-      <form onSubmit={handleSubmit} style={{
-        background: '#fff',
-        boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
-        borderRadius: '12px',
-        padding: '20px',
-        marginBottom: '40px'
-      }}>
-        {/* 各軸の見出しと質問 */}
-        <h2 style={{ textAlign: 'center', fontWeight: 700, color: 'var(--accent-color)', fontSize: '1.5rem' }}>I vs R</h2>
-        {questions.filter(q => q.id >= 1 && q.id <= 7).map(q => (
-          <div key={q.id} className="question" style={{
-            margin: '15px auto',
-            padding: '20px',
-            background: '#fff',
-            borderRadius: '8px',
-            boxShadow: '0 2px 8px var(--shadow-color)',
-            maxWidth: '600px'
-          }}>
-            <p style={{
-              marginBottom: '15px',
-              fontWeight: 500,
-              color: '#555',
-              fontSize: '1.1rem',
-              textAlign: 'center'
-            }}>
-              {q.id}. {q.text}
-            </p>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '10px',
-              fontWeight: 600,
-              color: '#666',
-              fontSize: '0.9rem',
-              padding: '0 10px'
-            }}>
-              <span>当てはまらない</span>
-              <span>やや当てはまらない</span>
-              <span>どちらでもない</span>
-              <span>やや当てはまる</span>
-              <span>当てはまる</span>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          background: "#fff",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+          borderRadius: "12px",
+          padding: "20px",
+          marginBottom: "40px",
+        }}
+      >
+        {/* I vs R */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: 700,
+            color: "var(--accent-color)",
+            fontSize: "1.5rem",
+          }}
+        >
+          I vs R
+        </h2>
+        {questions
+          .filter((q) => q.id >= 1 && q.id <= 7)
+          .map((q) => (
+            <div
+              key={q.id}
+              className="question"
+              style={{
+                margin: "15px auto",
+                padding: "20px",
+                background: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px var(--shadow-color)",
+                maxWidth: "600px",
+              }}
+            >
+              <p
+                style={{
+                  marginBottom: "15px",
+                  fontWeight: 500,
+                  color: "#555",
+                  fontSize: "1.1rem",
+                  textAlign: "center",
+                }}
+              >
+                {q.id}. {q.text}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "10px",
+                  fontWeight: 600,
+                  color: "#666",
+                  fontSize: "0.9rem",
+                  padding: "0 10px",
+                }}
+              >
+                <span>当てはまらない</span>
+                <span>やや当てはまらない</span>
+                <span>どちらでもない</span>
+                <span>やや当てはまる</span>
+                <span>当てはまる</span>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "15px",
+                  flexWrap: "wrap",
+                  padding: "0 10px",
+                }}
+              >
+                {[1, 2, 3, 4, 5].map((option) => (
+                  <div key={option}>
+                    <input
+                      type="radio"
+                      name={`q${q.id}`}
+                      id={`q${q.id}_${option}`}
+                      value={option}
+                      className="visually-hidden"
+                      // 各グループにつき最初の選択肢のみ required を指定
+                      required={option === 1}
+                    />
+                    <label
+                      htmlFor={`q${q.id}_${option}`}
+                      className="custom-radio"
+                    ></label>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '15px',
-              flexWrap: 'wrap',
-              padding: '0 10px'
-            }}>
-              {[1,2,3,4,5].map(option => (
-                <div key={option}>
-                  <input type="radio" name={`q${q.id}`} id={`q${q.id}_${option}`} value={option} required={option === 1} style={{ display: 'none' }} />
-                  <label htmlFor={`q${q.id}_${option}`} style={radioLabelStyle}></label>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
 
-        <h2 style={{ textAlign: 'center', fontWeight: 700, color: 'var(--accent-color)', fontSize: '1.5rem' }}>L vs H</h2>
-        {questions.filter(q => q.id >= 8 && q.id <= 14).map(q => (
-          <div key={q.id} className="question" style={{
-            margin: '15px auto',
-            padding: '20px',
-            background: '#fff',
-            borderRadius: '8px',
-            boxShadow: '0 2px 8px var(--shadow-color)',
-            maxWidth: '600px'
-          }}>
-            <p style={{
-              marginBottom: '15px',
-              fontWeight: 500,
-              color: '#555',
-              fontSize: '1.1rem',
-              textAlign: 'center'
-            }}>
-              {q.id}. {q.text}
-            </p>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '10px',
-              fontWeight: 600,
-              color: '#666',
-              fontSize: '0.9rem',
-              padding: '0 10px'
-            }}>
-              <span>当てはまらない</span>
-              <span>やや当てはまらない</span>
-              <span>どちらでもない</span>
-              <span>やや当てはまる</span>
-              <span>当てはまる</span>
+        {/* L vs H */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: 700,
+            color: "var(--accent-color)",
+            fontSize: "1.5rem",
+          }}
+        >
+          L vs H
+        </h2>
+        {questions
+          .filter((q) => q.id >= 8 && q.id <= 14)
+          .map((q) => (
+            <div
+              key={q.id}
+              className="question"
+              style={{
+                margin: "15px auto",
+                padding: "20px",
+                background: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px var(--shadow-color)",
+                maxWidth: "600px",
+              }}
+            >
+              <p
+                style={{
+                  marginBottom: "15px",
+                  fontWeight: 500,
+                  color: "#555",
+                  fontSize: "1.1rem",
+                  textAlign: "center",
+                }}
+              >
+                {q.id}. {q.text}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "10px",
+                  fontWeight: 600,
+                  color: "#666",
+                  fontSize: "0.9rem",
+                  padding: "0 10px",
+                }}
+              >
+                <span>当てはまらない</span>
+                <span>やや当てはまらない</span>
+                <span>どちらでもない</span>
+                <span>やや当てはまる</span>
+                <span>当てはまる</span>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "15px",
+                  flexWrap: "wrap",
+                  padding: "0 10px",
+                }}
+              >
+                {[1, 2, 3, 4, 5].map((option) => (
+                  <div key={option}>
+                    <input
+                      type="radio"
+                      name={`q${q.id}`}
+                      id={`q${q.id}_${option}`}
+                      value={option}
+                      className="visually-hidden"
+                      required={option === 1}
+                    />
+                    <label
+                      htmlFor={`q${q.id}_${option}`}
+                      className="custom-radio"
+                    ></label>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '15px',
-              flexWrap: 'wrap',
-              padding: '0 10px'
-            }}>
-              {[1,2,3,4,5].map(option => (
-                <div key={option}>
-                  <input type="radio" name={`q${q.id}`} id={`q${q.id}_${option}`} value={option} required={option === 1} style={{ display: 'none' }} />
-                  <label htmlFor={`q${q.id}_${option}`} style={radioLabelStyle}></label>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
 
-        <h2 style={{ textAlign: 'center', fontWeight: 700, color: 'var(--accent-color)', fontSize: '1.5rem' }}>E vs V</h2>
-        {questions.filter(q => q.id >= 15 && q.id <= 21).map(q => (
-          <div key={q.id} className="question" style={{
-            margin: '15px auto',
-            padding: '20px',
-            background: '#fff',
-            borderRadius: '8px',
-            boxShadow: '0 2px 8px var(--shadow-color)',
-            maxWidth: '600px'
-          }}>
-            <p style={{
-              marginBottom: '15px',
-              fontWeight: 500,
-              color: '#555',
-              fontSize: '1.1rem',
-              textAlign: 'center'
-            }}>
-              {q.id}. {q.text}
-            </p>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '10px',
-              fontWeight: 600,
-              color: '#666',
-              fontSize: '0.9rem',
-              padding: '0 10px'
-            }}>
-              <span>当てはまらない</span>
-              <span>やや当てはまらない</span>
-              <span>どちらでもない</span>
-              <span>やや当てはまる</span>
-              <span>当てはまる</span>
+        {/* E vs V */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: 700,
+            color: "var(--accent-color)",
+            fontSize: "1.5rem",
+          }}
+        >
+          E vs V
+        </h2>
+        {questions
+          .filter((q) => q.id >= 15 && q.id <= 21)
+          .map((q) => (
+            <div
+              key={q.id}
+              className="question"
+              style={{
+                margin: "15px auto",
+                padding: "20px",
+                background: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px var(--shadow-color)",
+                maxWidth: "600px",
+              }}
+            >
+              <p
+                style={{
+                  marginBottom: "15px",
+                  fontWeight: 500,
+                  color: "#555",
+                  fontSize: "1.1rem",
+                  textAlign: "center",
+                }}
+              >
+                {q.id}. {q.text}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "10px",
+                  fontWeight: 600,
+                  color: "#666",
+                  fontSize: "0.9rem",
+                  padding: "0 10px",
+                }}
+              >
+                <span>当てはまらない</span>
+                <span>やや当てはまらない</span>
+                <span>どちらでもない</span>
+                <span>やや当てはまる</span>
+                <span>当てはまる</span>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "15px",
+                  flexWrap: "wrap",
+                  padding: "0 10px",
+                }}
+              >
+                {[1, 2, 3, 4, 5].map((option) => (
+                  <div key={option}>
+                    <input
+                      type="radio"
+                      name={`q${q.id}`}
+                      id={`q${q.id}_${option}`}
+                      value={option}
+                      className="visually-hidden"
+                      required={option === 1}
+                    />
+                    <label
+                      htmlFor={`q${q.id}_${option}`}
+                      className="custom-radio"
+                    ></label>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '15px',
-              flexWrap: 'wrap',
-              padding: '0 10px'
-            }}>
-              {[1,2,3,4,5].map(option => (
-                <div key={option}>
-                  <input type="radio" name={`q${q.id}`} id={`q${q.id}_${option}`} value={option} required={option === 1} style={{ display: 'none' }} />
-                  <label htmlFor={`q${q.id}_${option}`} style={radioLabelStyle}></label>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
 
-        <h2 style={{ textAlign: 'center', fontWeight: 700, color: 'var(--accent-color)', fontSize: '1.5rem' }}>T vs D</h2>
-        {questions.filter(q => q.id >= 22 && q.id <= 28).map(q => (
-          <div key={q.id} className="question" style={{
-            margin: '15px auto',
-            padding: '20px',
-            background: '#fff',
-            borderRadius: '8px',
-            boxShadow: '0 2px 8px var(--shadow-color)',
-            maxWidth: '600px'
-          }}>
-            <p style={{
-              marginBottom: '15px',
-              fontWeight: 500,
-              color: '#555',
-              fontSize: '1.1rem',
-              textAlign: 'center'
-            }}>
-              {q.id}. {q.text}
-            </p>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginBottom: '10px',
-              fontWeight: 600,
-              color: '#666',
-              fontSize: '0.9rem',
-              padding: '0 10px'
-            }}>
-              <span>当てはまらない</span>
-              <span>やや当てはまらない</span>
-              <span>どちらでもない</span>
-              <span>やや当てはまる</span>
-              <span>当てはまる</span>
+        {/* T vs D */}
+        <h2
+          style={{
+            textAlign: "center",
+            fontWeight: 700,
+            color: "var(--accent-color)",
+            fontSize: "1.5rem",
+          }}
+        >
+          T vs D
+        </h2>
+        {questions
+          .filter((q) => q.id >= 22 && q.id <= 28)
+          .map((q) => (
+            <div
+              key={q.id}
+              className="question"
+              style={{
+                margin: "15px auto",
+                padding: "20px",
+                background: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px var(--shadow-color)",
+                maxWidth: "600px",
+              }}
+            >
+              <p
+                style={{
+                  marginBottom: "15px",
+                  fontWeight: 500,
+                  color: "#555",
+                  fontSize: "1.1rem",
+                  textAlign: "center",
+                }}
+              >
+                {q.id}. {q.text}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "10px",
+                  fontWeight: 600,
+                  color: "#666",
+                  fontSize: "0.9rem",
+                  padding: "0 10px",
+                }}
+              >
+                <span>当てはまらない</span>
+                <span>やや当てはまらない</span>
+                <span>どちらでもない</span>
+                <span>やや当てはまる</span>
+                <span>当てはまる</span>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "15px",
+                  flexWrap: "wrap",
+                  padding: "0 10px",
+                }}
+              >
+                {[1, 2, 3, 4, 5].map((option) => (
+                  <div key={option}>
+                    <input
+                      type="radio"
+                      name={`q${q.id}`}
+                      id={`q${q.id}_${option}`}
+                      value={option}
+                      className="visually-hidden"
+                      required={option === 1}
+                    />
+                    <label
+                      htmlFor={`q${q.id}_${option}`}
+                      className="custom-radio"
+                    ></label>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '15px',
-              flexWrap: 'wrap',
-              padding: '0 10px'
-            }}>
-              {[1,2,3,4,5].map(option => (
-                <div key={option}>
-                  <input type="radio" name={`q${q.id}`} id={`q${q.id}_${option}`} value={option} required={option === 1} style={{ display: 'none' }} />
-                  <label htmlFor={`q${q.id}_${option}`} style={radioLabelStyle}></label>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
 
-        <button type="submit" style={{
-          display: 'block',
-          margin: '30px auto 15px',
-          padding: '14px 28px',
-          fontSize: '1rem',
-          fontWeight: 700,
-          background: 'var(--primary-color)',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '8px',
-          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-          cursor: 'pointer',
-          transition: 'background 0.3s, transform 0.3s'
-        }}>
+        <button
+          type="submit"
+          style={{
+            display: "block",
+            margin: "30px auto 15px",
+            padding: "14px 28px",
+            fontSize: "1rem",
+            fontWeight: 700,
+            background: "var(--primary-color)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            cursor: "pointer",
+            transition: "background 0.3s, transform 0.3s",
+          }}
+        >
           診断結果を見る
         </button>
       </form>
 
       {/* 診断結果表示 */}
       {result && (
-        <div style={{
-          display: 'block',
-          textAlign: 'center',
-          marginTop: '20px',
-          maxWidth: '600px',
-          width: '100%',
-          background: '#fff',
-          padding: '20px',
-          borderRadius: '12px',
-          boxShadow: '0 2px 8px var(--shadow-color)'
-        }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: 700, color: 'var(--accent-color)' }}>
-            あなたのタイプは <span style={{ fontWeight: 700, fontSize: '1.25rem', color: '#42b883' }}>{result.typeKey}</span>
+        <div
+          style={{
+            display: "block",
+            textAlign: "center",
+            marginTop: "20px",
+            maxWidth: "600px",
+            width: "100%",
+            background: "#fff",
+            padding: "20px",
+            borderRadius: "12px",
+            boxShadow: "0 2px 8px var(--shadow-color)",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "1.5rem",
+              marginBottom: "1rem",
+              fontWeight: 700,
+              color: "var(--accent-color)",
+            }}
+          >
+            あなたのタイプは{" "}
+            <span
+              style={{
+                fontWeight: 700,
+                fontSize: "1.25rem",
+                color: "#42b883",
+              }}
+            >
+              {result.typeKey}
+            </span>
           </h2>
-          <img src={`/image/${result.typeKey}.png`} alt={`${result.title} の画像`} style={{
-            maxWidth: '200px',
-            width: '100%',
-            height: 'auto',
-            borderRadius: '8px',
-            margin: '0 auto 10px',
-            display: 'block',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-          }} />
+          <img
+            src={`../image/${result.typeKey}.png`}
+            alt={`${result.title} の画像`}
+            style={{
+              maxWidth: "200px",
+              width: "100%",
+              height: "auto",
+              borderRadius: "8px",
+              margin: "0 auto 10px",
+              display: "block",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+            }}
+          />
           <p>{`『${result.title}』 - ${result.subtitle}`}</p>
-          <p style={{ marginTop: '10px', whiteSpace: 'pre-wrap', textAlign: 'left', color: '#555' }}>{result.description}</p>
+          <p
+            style={{
+              marginTop: "10px",
+              whiteSpace: "pre-wrap",
+              textAlign: "left",
+              color: "#555",
+            }}
+          >
+            {result.description}
+          </p>
         </div>
       )}
+
+      {/* CSS スタイル */}
+      <style jsx>{`
+        .visually-hidden {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          padding: 0;
+          border: 0;
+          clip: rect(0 0 0 0);
+          overflow: hidden;
+        }
+        .custom-radio {
+          cursor: pointer;
+          padding: 12px 20px;
+          border-radius: 50%;
+          background: #e0f7fa;
+          border: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          font-weight: 600;
+          transition: all 0.3s ease;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        input[type="radio"]:checked + .custom-radio {
+          background: var(--primary-color);
+          color: #fff;
+          transform: scale(1.1);
+        }
+      `}</style>
     </div>
   );
 }
