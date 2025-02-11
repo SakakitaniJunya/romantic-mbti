@@ -46,6 +46,7 @@ function getCompatibilityComment(score: number): string {
   }
 }
 
+/*
 function getScoreClass(score: number): string {
   if (score >= 4) {
     return "score-high";
@@ -55,6 +56,7 @@ function getScoreClass(score: number): string {
     return "score-low";
   }
 }
+*/
 
 export default function CompatibilityPage() {
   const [myType, setMyType] = useState("");
@@ -73,6 +75,7 @@ export default function CompatibilityPage() {
     setResultComment(comment);
   };
 
+  /*
   const matrixRows = allTypes.map((myT) => {
     const rowCells = allTypes.map((partnerT) => {
       const score = calcCompatibilityScore(myT, partnerT);
@@ -97,6 +100,8 @@ export default function CompatibilityPage() {
       </tr>
     );
   });
+  */
+
 
   return (
     <div className="container">
