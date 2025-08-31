@@ -1194,11 +1194,12 @@ export default function TestPage() {
             分人理論に基づく科学的恋愛パーソナリティ分析
           </p>
           
-          <div style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap", marginBottom: "20px" }}>
+          <div style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap", marginBottom: "30px" }}>
             <div className="premium-badge shimmer" style={{ 
               animation: "float 2s ease-in-out infinite",
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              opacity: "0.7",
+              background: "var(--premium-gradient)",
+              boxShadow: "0 4px 15px rgba(217, 70, 239, 0.3)",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
               position: "relative",
               overflow: "hidden"
             }}>
@@ -1207,14 +1208,16 @@ export default function TestPage() {
             {userProgress.completedTests > 0 && (
               <div className="premium-badge" style={{
                 background: "var(--success-color)",
-                animation: "float 2.5s ease-in-out infinite"
+                animation: "float 2.5s ease-in-out infinite",
+                boxShadow: "0 4px 15px rgba(16, 185, 129, 0.3)"
               }}>
                 🎯 診断回数: {userProgress.completedTests}回
               </div>
             )}
             <div className="premium-badge" style={{
               background: "var(--secondary-color)",
-              animation: "float 3s ease-in-out infinite"
+              animation: "float 3s ease-in-out infinite",
+              boxShadow: "0 4px 15px rgba(139, 92, 246, 0.3)"
             }}>
               📊 分人理論ベース
             </div>
@@ -1286,19 +1289,24 @@ export default function TestPage() {
         <div style={{ display: "flex", justifyContent: "center", gap: "15px", flexWrap: "wrap" }}>
           <Link href="/types" style={{ textDecoration: "none" }}>
             <button className="btn-secondary" style={{ 
-              background: "var(--love-gradient)",
-              boxShadow: "0 4px 15px rgba(255, 107, 157, 0.4)",
-              color: "white"
+              background: "var(--rose-gradient)",
+              boxShadow: "0 8px 24px rgba(217, 70, 239, 0.4)",
+              color: "white",
+              border: "2px solid rgba(255, 255, 255, 0.2)"
             }}>
               📋 16タイプ一覧を見る
             </button>
           </Link>
-          <button className="btn-secondary" disabled style={{ opacity: "0.5", cursor: "not-allowed" }}>
-            🔍 高度な相性診断（開発中）
-          </button>
-          <button className="btn-secondary" disabled style={{ opacity: "0.5", cursor: "not-allowed" }}>
-            🎓 認定プログラム（開発中）
-          </button>
+          <Link href="/about" style={{ textDecoration: "none" }}>
+            <button className="btn-secondary" style={{
+              background: "var(--secondary-color)",
+              boxShadow: "0 8px 24px rgba(139, 92, 246, 0.4)",
+              color: "white",
+              border: "2px solid rgba(255, 255, 255, 0.2)"
+            }}>
+              🧠 分人理論について
+            </button>
+          </Link>
         </div>
       </div>
 
