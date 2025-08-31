@@ -2487,9 +2487,9 @@ export default function TestPage() {
         
         @media (max-width: 768px) {
           .custom-radio {
-            width: 28px !important;
-            height: 28px !important;
-            font-size: 14px !important;
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 16px !important;
           }
           
           .grid-mobile {
@@ -2504,6 +2504,9 @@ export default function TestPage() {
           
           .step-buttons button {
             width: 100% !important;
+            padding: 16px !important;
+            font-size: 16px !important;
+            min-height: 48px !important;
           }
           
           .share-buttons {
@@ -2512,6 +2515,10 @@ export default function TestPage() {
           
           .share-buttons button {
             width: 100% !important;
+            padding: 16px !important;
+            font-size: 16px !important;
+            min-height: 48px !important;
+            margin-bottom: 8px !important;
           }
         }
       `}</style>
