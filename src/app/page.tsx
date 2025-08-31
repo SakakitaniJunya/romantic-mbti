@@ -1589,8 +1589,14 @@ export default function TestPage() {
                   boxShadow: "0 12px 35px rgba(0,0,0,0.15)",
                   transition: "transform 0.3s ease"
                 }}
-                onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
-                onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+                onMouseEnter={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.transform = "scale(1)";
+                }}
               />
             </div>
             
@@ -1716,9 +1722,13 @@ export default function TestPage() {
               <button 
                 className="btn-secondary"
                 style={{ fontSize: "0.9rem", padding: "8px 16px" }}
-                onClick={() => {
+                onClick={async () => {
                   const text = `私の恋愛分人タイプは「${result.title}」(${result.typeKey})でした！\n${result.subtitle}\n\n#恋愛診断 #分人理論`;
-                  navigator.share ? navigator.share({ text }) : navigator.clipboard.writeText(text);
+                  if (navigator.share) {
+                    await navigator.share({ text });
+                  } else {
+                    await navigator.clipboard.writeText(text);
+                  }
                 }}
               >
                 📱 スマホでシェア
@@ -2397,10 +2407,14 @@ export default function TestPage() {
                     <button 
                       className="btn-primary"
                       style={{ fontSize: "0.9rem", padding: "8px 16px" }}
-                      onClick={() => {
+                      onClick={async () => {
                         const compatScore = calculateCompatibility(result.typeKey, partnerType);
                         const text = `${result.title}(${result.typeKey})と${typeData[partnerType].title}(${partnerType})の相性は${compatScore}%でした！\n\n#恋愛診断 #相性診断 #分人理論`;
-                        navigator.share ? navigator.share({ text }) : navigator.clipboard.writeText(text);
+                        if (navigator.share) {
+                          await navigator.share({ text });
+                        } else {
+                          await navigator.clipboard.writeText(text);
+                        }
                       }}
                     >
                       📤 相性結果をシェア
@@ -2438,12 +2452,14 @@ export default function TestPage() {
               transition: "all 0.3s ease"
             }}
             onMouseEnter={(e) => {
-              e.target.style.borderColor = "var(--primary-color)";
-              e.target.style.color = "var(--primary-color)";
+              const target = e.target as HTMLElement;
+              target.style.borderColor = "var(--primary-color)";
+              target.style.color = "var(--primary-color)";
             }}
             onMouseLeave={(e) => {
-              e.target.style.borderColor = "var(--text-light)";
-              e.target.style.color = "var(--text-light)";
+              const target = e.target as HTMLElement;
+              target.style.borderColor = "var(--text-light)";
+              target.style.color = "var(--text-light)";
             }}
           >
             🔄 もう一度診断する

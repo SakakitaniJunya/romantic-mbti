@@ -489,9 +489,8 @@ export default function TypesPage() {
           if (!typeObj) return null;
           
           return (
-            <Link href={`/types/${key.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link key={key} href={`/types/${key.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div 
-                key={key} 
                 className="glass-card type-card" 
                 style={{
                   padding: '20px',
