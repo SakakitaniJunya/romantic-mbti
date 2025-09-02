@@ -1719,6 +1719,14 @@ export default function TestPage() {
               justifyContent: "center",
               flexWrap: "wrap"
             }}>
+              <Link href={`/types/${result.typeKey.toLowerCase()}`} style={{ textDecoration: "none" }}>
+                <button 
+                  className="btn-primary"
+                  style={{ fontSize: "0.9rem", padding: "8px 16px" }}
+                >
+                  📋 詳細ページを見る
+                </button>
+              </Link>
               <button 
                 className="btn-secondary"
                 style={{ fontSize: "0.9rem", padding: "8px 16px" }}
